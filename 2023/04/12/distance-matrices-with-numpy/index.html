@@ -28,7 +28,7 @@
 <meta property="og:description" content="这是一篇通过NumPy计算距离矩阵的文章，原作者是Jay Mody。文章介绍了距离矩阵的概念，并且通过层层递进的方式，特别清晰地讲解了使用NumPy进行向量计算的思路和技巧。 原文链接：Computing Distance Matrices with NumPy 超级推荐：）">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-04-12T13:56:25.000Z">
-<meta property="article:modified_time" content="2023-04-12T16:46:58.369Z">
+<meta property="article:modified_time" content="2023-04-13T01:59:23.859Z">
 <meta property="article:author" content="Generating">
 <meta name="twitter:card" content="summary">
 
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-13 00:46:58" itemprop="dateModified" datetime="2023-04-13T00:46:58+08:00">2023-04-13</time>
+                <time title="Modified: 2023-04-13 09:59:23" itemprop="dateModified" datetime="2023-04-13T09:59:23+08:00">2023-04-13</time>
               </span>
 
           
@@ -239,11 +239,11 @@
 <h2 id="无循环版本？！"><a href="#无循环版本？！" class="headerlink" title="无循环版本？！"></a>无循环版本？！</h2><p>其实我们还可以做的更好，只使用向量/矩阵操作，连循环都不用。这是啥情况？我们再仔细看看我们的方程：</p>
 <p>$$dist_{ij} = \sqrt{\sum_{k=1}^d (x_{ik} - y_{jk})^2}$$</p>
 <p>想想看，如果我们把求和号里的表达式展开呢？</p>
-<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2x_{ik}y_{jk} + y^2_{jk}}\$$</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2x_{ik}y_{jk} + y^2_{jk}}$$</p>
 <p>有趣吧？让我们把这个求和分配开：</p>
-<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2 \sum_{k=1}^d x_{ik}y_{jk} + \sum_{k=1}^dy^2_{jk}}\$$</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2 \sum_{k=1}^d x_{ik}y_{jk} + \sum_{k=1}^dy^2_{jk}}$$</p>
 <p>你会发现，上式的每一个求和其实都是点乘。现在我们就替换掉原来的符号，使用更干净的表达：</p>
-<p>$$dist_{ij} = \sqrt{x_i \cdot x_i - 2x_i \cdot y_j + y_j \cdot y_j}\$$</p>
+<p>$$dist_{ij} = \sqrt{x_i \cdot x_i - 2x_i \cdot y_j + y_j \cdot y_j}$$</p>
 <p>我们注意到，对于所有$i,j$的组合，中间项是唯一的，而左右两项都是重复的。考虑固定$i$或者$j$并对其它变量进行迭代，你会发现$x_i \cdot x_i$出现$j$次而$y_j \cdot y_j$出现$i$次。因此，这里的挑战是搞清楚如何计算所有可能的$x_i \cdot x_i$，$x_i \cdot y_j$和$y_j \cdot y_j$，然后将它们正确地加和。所有这些都不涉及循环。我们来试一下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this has the same affect as taking the dot product of each row with itself</span></span><br><span class="line">x2 = np.sum(X**<span class="number">2</span>, axis=<span class="number">1</span>) <span class="comment"># shape of (m)</span></span><br><span class="line">y2 = np.sum(X_train**<span class="number">2</span>, axis=<span class="number">1</span>) <span class="comment"># shape of (n)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># we can compute all x_i * y_j and store it in a matrix at xy[i][j] by</span></span><br><span class="line"><span class="comment"># taking the matrix multiplication between X and X_train transpose</span></span><br><span class="line"><span class="comment"># if you're stuggling to understand this, draw out the matrices and</span></span><br><span class="line"><span class="comment"># do the matrix multiplication by hand</span></span><br><span class="line"><span class="comment"># (m, d) x (d, n) -&gt; (m, n)</span></span><br><span class="line">xy = np.matmul(X, X_train.T)</span><br><span class="line"></span><br><span class="line"><span class="comment"># each row in xy needs to be added with x2[i]</span></span><br><span class="line"><span class="comment"># each column of xy needs to be added with y2[j]</span></span><br><span class="line"><span class="comment"># to get everything to play well, we'll need to reshape</span></span><br><span class="line"><span class="comment"># x2 from (m) -&gt; (m, 1), numpy will handle the rest of the broadcasting for us</span></span><br><span class="line"><span class="comment"># see: https://numpy.org/doc/stable/user/basics.broadcasting.html</span></span><br><span class="line">x2 = x2.reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">dists = np.sqrt(x2 - <span class="number">2</span>*xy + y2) <span class="comment"># (m, 1) repeat columnwise + (m, n) + (n) repeat rowwise -&gt; (m, n)</span></span><br></pre></td></tr></table></figure>
 
