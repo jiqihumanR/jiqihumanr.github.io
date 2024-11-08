@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这是一篇对DHH(David Heinemeier Hansson)的专访，关于“学习”这个主题。非常的棒，看了好几遍，翻译出来部分留念。原文在这里。 为了方便，很多地方的翻译我直接用的译文，没有翻译成中文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DHH专访：关于真实世界的超级学习者[翻译]">
+<meta property="og:url" content="http://yoursite.com/2024/02/17/DHH-interview/index.html">
+<meta property="og:site_name" content="Yin&#39;s Blog">
+<meta property="og:description" content="这是一篇对DHH(David Heinemeier Hansson)的专访，关于“学习”这个主题。非常的棒，看了好几遍，翻译出来部分留念。原文在这里。 为了方便，很多地方的翻译我直接用的译文，没有翻译成中文。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-02-17T08:22:43.000Z">
+<meta property="article:modified_time" content="2024-09-09T01:14:12.000Z">
+<meta property="article:author" content="Generating">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2024/02/17/DHH-interview/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>DHH专访：关于真实世界的超级学习者[翻译] | Yin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-blog">
+
+    <a href="/home" rel="section"><i class="fa fa-home fa-fw"></i>Blog</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/02/17/DHH-interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Generating">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DHH专访：关于真实世界的超级学习者[翻译]
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-02-17 16:22:43" itemprop="dateCreated datePublished" datetime="2024-02-17T16:22:43+08:00">2024-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-09-09 09:14:12" itemprop="dateModified" datetime="2024-09-09T09:14:12+08:00">2024-09-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css">
+<p>这是一篇对DHH(David Heinemeier Hansson)的专访，关于“学习”这个主题。非常的棒，看了好几遍，翻译出来部分留念。原文在<a href="https://superhumanacademy.com/podcast/david-heinemeier-hansson-interview-real-life-superlearner/" target="_blank" rel="noopener">这里</a>。</p>
+<p>为了方便，很多地方的翻译我直接用的译文，没有翻译成中文。</p>
+
+
+<blockquote>
+<p>“将你大脑中关于学习速度的限制打破…你可以将大多数的学习轨道压缩到一个非常、非常短的时间内…”<br>—David Heinemeier Hansson</p>
+</blockquote>
+<h2 id="本次采访涉及的主题："><a href="#本次采访涉及的主题：" class="headerlink" title="本次采访涉及的主题："></a>本次采访涉及的主题：</h2><ul>
+<li>DHH的生活与工作的总结</li>
+<li><strong>DHH是如何在保持平衡的同时获得那么多成功的</strong></li>
+<li>DHH是如何凭着每周仅仅10小时进行Ruby on Rails和37Signals的开发和创业的？</li>
+<li><strong>DHH的时间管理技巧背后的秘密</strong></li>
+<li>作为email的代替的“群聊”：到底是朋友还是敌人？</li>
+<li><strong>DHH到底是怎么进行学习的？他是如何学这么多，又学这么快的？</strong></li>
+<li>关于DHH是如何通过学习最优的代码和向全世界优秀coders学习从而发明了Ruby on Rails的，为什么？</li>
+<li>DHH学习auto racing并开始统治这项运动的故事</li>
+<li>DHH使用了什么惊奇的资源用于学习，有什么是你可以立刻获取的？</li>
+<li><strong>DHH在加速学习的过程中，有什么是不舒适和痛苦的？</strong></li>
+<li>DHH是如何平衡初学者心态并从其它人地方进行学习的？</li>
+<li>superlearner方法论和DHH的学习工具箱之间有什么共通的方法？</li>
+<li>有什么其它的学习领域是DHH应用了他的工具箱或者“模版”的？</li>
+<li>DHH所学习的领域之间有不有溢出效应？</li>
+<li>编程、商业管理和赛车之间有什么相似之处？</li>
+<li><strong>为一个事情“发展一个眼睛”是什么意思？你是怎么做的？</strong></li>
+<li>在赛车中”operating at 2Ghz”是什么意思？这与其它操作有什么不同？</li>
+<li>关于心流状态、神经网络的讨论，DHH称心流的”residue”叫什么？</li>
+<li><strong>DHH大量阅读吗？那他读什么呢？</strong></li>
+<li>技巧、日常和习惯在high level层面上对DHH的帮助是什么？</li>
+<li>Stoicism是如何影响DHH并提高他的生活和效率的？</li>
+<li>DHH的下一个里程碑或者目标是什么？他下一步希望完成是什么？</li>
+<li>为什么DHH对“有目标”是不支持的？</li>
+<li>DHH在今天比起10年前住在一个小公寓里时开心了多少？</li>
+<li>DHH当前所面对的挑战是什么？</li>
+<li>有什么书对DHH的生活起到了重大的影响？</li>
+<li>在哪里可以更多的了解到DHH？</li>
+<li>有什么是DHH希望你余生可用的建议？</li>
+</ul>
+<h2 id="此次采访的相关资源："><a href="#此次采访的相关资源：" class="headerlink" title="此次采访的相关资源："></a>此次采访的相关资源：</h2><ul>
+<li><a href="https://basecamp.com/about" target="_blank" rel="noopener">Basecamp, formerly 37Signals</a></li>
+<li><a href="https://rubyonrails.org/" target="_blank" rel="noopener">Ruby on Rails</a></li>
+<li>Books by DHH:<ul>
+<li>Gettting Real</li>
+<li>Rework</li>
+<li>Remote</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Mihaly_Csikszentmihalyi" target="_blank" rel="noopener">Mihaly Csikszentmihalyi</a></li>
+<li>Getting Things Done by David Allen</li>
+<li><a href="https://superhumanacademy.com/getting-things-done-the-right-way-w-productivity-expert-david-allen/" target="_blank" rel="noopener">之前关于David Allen的采访</a></li>
+<li>Jason Fried’s article, “I’ve Never Had A Goal”</li>
+<li>DHH’s favorite books:<ul>
+<li>Small Talk, Best Practices by Kent Beck</li>
+<li>Punished by Rewards by Alfie Kohn</li>
+<li>Drive by Daniel Pink</li>
+<li>A Guide To The Good Life by William B. Irvine</li>
+<li>The Intelligent Investor by Benjanmin Graham</li>
+</ul>
+</li>
+</ul>
+<h2 id="DHH的金句："><a href="#DHH的金句：" class="headerlink" title="DHH的金句："></a>DHH的金句：</h2><blockquote>
+<p>“我不认为关于工作我有什么超能力。大量认为的工作其实是没有必要的。”</p>
+</blockquote>
+<blockquote>
+<p>“其实大量的人、大量的时间并没有价值。(It just so happens that most people, most of the time, don’t make their hours count.)”</p>
+</blockquote>
+<blockquote>
+<p>“Most people mistake the amount of time they spend in front of a computer… as work.”</p>
+</blockquote>
+<blockquote>
+<p>“If I really get into the zone, I can do in 2 days what would otherwise take me 2 weeks… It’s just not even on the same scale.”</p>
+</blockquote>
+<blockquote>
+<p>“I didn’t get my driver’s license until I was 25, I didn’t sit in a race car until I think I was almost 30… Those are not the hallmarks of someone generally who gets to compete at a high level.”</p>
+</blockquote>
+<blockquote>
+<p>“I never had the ambition to be the fastest dirver at my local track… I wanted to be the fastest amateur driver in the world… Why shouldn’t I be?”</p>
+</blockquote>
+<blockquote>
+<p>“Most people who are really good at something…they really like when someone looks up to them, or when someone approaches them.”</p>
+</blockquote>
+<blockquote>
+<p>“I tried different things, and these are the things that worked.(不停尝试)”</p>
+</blockquote>
+<blockquote>
+<p>“There’s just a way of learning that applies to most domains, and once you sort of find that to be successful in one domain, it’s not that hard to just basically say ‘copy paste.’”</p>
+</blockquote>
+<blockquote>
+<p>“They’re perceiving that experience at 100Mhz. I’m perceiving that experience at 2Ghz.”</p>
+</blockquote>
+<blockquote>
+<p>“One of the quests that I’ve had for a long time is to design my lifestyle in such a way that it’s sustainable and filled with as many happy moments as I can cram in.”</p>
+</blockquote>
+<blockquote>
+<p>“Once you’ve tasted flow… you want more. It’s like crack cocaine.”</p>
+</blockquote>
+<blockquote>
+<p>“And you know what? Things will be just fucking fine if I go back to square one like that.”</p>
+</blockquote>
+<blockquote>
+<p>“Stop thinking that there’s one answer to anything.”</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/13/gpt-from-scratch/" rel="prev" title="60行NumPy手搓GPT[翻译]">
+      <i class="fa fa-chevron-left"></i> 60行NumPy手搓GPT[翻译]
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Generating</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Generating</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

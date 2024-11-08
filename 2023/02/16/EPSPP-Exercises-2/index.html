@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这篇是《Exploring Protein Structure: Principles and Practice》这本书的练习解答。纯粹是练习记录。这是Exercise 2的部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EPSPP-Exercises-2">
+<meta property="og:url" content="http://yoursite.com/2023/02/16/EPSPP-Exercises-2/index.html">
+<meta property="og:site_name" content="Yin&#39;s Blog">
+<meta property="og:description" content="这篇是《Exploring Protein Structure: Principles and Practice》这本书的练习解答。纯粹是练习记录。这是Exercise 2的部分。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/images/2.6.1.png">
+<meta property="og:image" content="http://yoursite.com/images/2.6.2.png">
+<meta property="og:image" content="http://yoursite.com/images/2.6.3.png">
+<meta property="og:image" content="http://yoursite.com/images/2.6.41.png">
+<meta property="og:image" content="http://yoursite.com/images/2.6.42.png">
+<meta property="og:image" content="http://yoursite.com/images/2.6.43.png">
+<meta property="article:published_time" content="2023-02-16T15:02:15.000Z">
+<meta property="article:modified_time" content="2024-02-13T07:16:45.000Z">
+<meta property="article:author" content="Generating">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/2.6.1.png">
+
+<link rel="canonical" href="http://yoursite.com/2023/02/16/EPSPP-Exercises-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>EPSPP-Exercises-2 | Yin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-blog">
+
+    <a href="/home" rel="section"><i class="fa fa-home fa-fw"></i>Blog</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/02/16/EPSPP-Exercises-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Generating">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EPSPP-Exercises-2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-02-16 23:02:15" itemprop="dateCreated datePublished" datetime="2023-02-16T23:02:15+08:00">2023-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-02-13 15:16:45" itemprop="dateModified" datetime="2024-02-13T15:16:45+08:00">2024-02-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css">
+<p>这篇是《Exploring Protein Structure: Principles and Practice》这本书的练习解答。<br>纯粹是练习记录。这是Exercise 2的部分。</p>
+
+
+<p>本系列是《Exploring Protein Structure: Principles and Practice》这本书的练习解答。标题的EPSPP是书的题目的缩写。考虑到第一章没有练习，所以从Exercises-2开始。</p>
+<p>《Exploring Protein Structure: Principles and Practice》是Springer在2018年出的一本教材，属于Learning Materials in Biosciences系列。本书是作者Tim Skern多年讲授蛋白质结构与功能课程的一个产物。对任何想从事生物医学相关的小伙伴而言，这都是一本绝佳的入门书。没有枯燥的概念，作者通过PDB数据库和PyMOL软件，交互地讲解蛋白质结构和功能的各个知识点。通过对PyMOL的学习，读者会对蛋白质这个奇异的物质逐步了解理解，进而爱上它（相信我）。考虑到这并不是一个本书的笔记，因此我就在这里停下行文。下面开始练习解答的记录。（考虑到原文是英文，我这里会偷懒使用英文记录题目，不定期更新）</p>
+<p><strong>2.6.1</strong></p>
+<p>Q: The first exercise asks you to draw the image of a humble protein that given tremendous insight into protein structure and function over tha last 40 years. The protein is the <em>enzyme lysozyme</em> from the <em>T4 bacteriophage</em>. Elementary to produce in bacteria, straightforward to crystallize, and simple to measure, it was one of the first proteins whose structure was solved as well as being one of the first to be subjected to <em>site-directed mutagenesis(定点诱变)</em>. Mutation of <em>T4 lysozyme</em> has enormously magnified our knowledge of protein structures and <em>enzyme mechanisms</em>. We will see in Sect9.2 that this extremely stable protein is presently proving extremely useful in helping to crystallize difficult proteins. Figure 2.7 illustrates this protein using the PDB entry <em>2lzm</em>. Can you make this drawing? The command for the spectrum is “util.rainbow”.</p>
+<p>A: The code is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="number">2l</span>zm</span><br><span class="line"><span class="keyword">as</span> cartoon</span><br><span class="line">util.rainbow chain A</span><br><span class="line">bg (<span class="number">0.1</span>, <span class="number">0.8</span>, <span class="number">0.9</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2.6.1.png" alt="(exercise 2.6.1)"></p>
+<p><strong>2.6.2</strong></p>
+<p>Q: The second exercise involves a search of the PDB for structures of the <strong>protease papain</strong>, a molecule that we will explore in the next chapter. Enter <code>papain</code> into the search box of PDB, and you will see around 200 hits. Papain is a prototype for a group of proteases, so it often appears in the titles of the entries because of a mechanistic and structural resemblance. To find the structure that we will use in Chap.3, we need to refine the query. At the top of the hits for papain is the button “refine search”. Clicking this button gives you the opportunity to optimize your original search by taking you to the “Advanced Search Interface”. This tells us that entering papain into the search box on the home page initiates a “Text Search” that looks through every field in every entry. To refine the search, click on the little arrows at the right side of “Text Search”, scroll down to the group of fields “Structure Annotation”, and click on “Structure Title”. Enter papain in the search box. Then, in the “Choose a Query Type” box underneath, click on the small arrows, and scroll down to “Author Name” in the “Deposition” field and enter “Drenth”. Before you submit the query, let us just look at the feature “Result Count” at the right of each query box. If you click this, you will see how many entries for this term are present in the PDB; in October 2017, this was 59 for papain and 17 for Drenth. This feature is very useful to see if you have too many hits or none at all! Now click “Submit query”, which should give six entries; that is, of the 17 structures deposited by Drenth, 6 contain papain in the structure title. The first hit, <code>9pap</code> (Kamphuis et al. 1984), will be analyzed in Sect.3.3. Note that you cannot view the file in PDB format from the search results. You have to click on the entry (e.g., 9pap) and then download from the summary page. Downloading the files from the search results gives a file in the “cif” format, which stands for “Crystallographic Information File” which cannot be read by PyMOL(NOW IT CAN), unless you clicked the option to read such files on installation. Try to draw a cartoon of papain using the coordinates in the entry 9pap using the commands you have learnt already in this chapter. You can then compare it with Fig.3.3 in Chap. 3.</p>
+<p>A: The code is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="number">9</span>pap</span><br><span class="line"><span class="keyword">as</span> cartoon</span><br><span class="line">util.rainbow</span><br><span class="line">bg white</span><br><span class="line">png <span class="number">2.6</span><span class="number">.2</span>.png</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2.6.2.png" alt="(exercise 2.6.2)"></p>
+<p><strong>2.6.3</strong></p>
+<p>Q: The other hits in the search for papain and Drenth in Exercise 2.6.2 are all papain structures determined during a study of the interaction of papain with <code>chloromethylketone inhibitors</code>(氯甲基酮抑制剂) (Drenth et al. 1976). Look at the entry <code>4pad</code> in PyMOL. Visualize the <code>inhibitor TCK</code> (Tosyl-L-lysine chloromethyl ketone) in the same way as for <code>2NC</code> in Box 2.3. How does the binding of the <code>inhibitor TCK</code> differ from that of <code>2NC</code>? We will also examine this interaction in Exercise 6.13.1 in Chap. 6 and compare the binding of the two proteases in more detail.</p>
+<p>A: The code is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="number">4</span>pad</span><br><span class="line"><span class="keyword">as</span> cartoon</span><br><span class="line">util.rainbow</span><br><span class="line">show sticks</span><br><span class="line">png <span class="number">2.6</span><span class="number">.3</span>.png</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2.6.3.png" alt="(exercise 2.6.3)"></p>
+<p><strong>2.6.4</strong></p>
+<p>Q: Choose any one of the molecules that you drew in this chapter, and try to imagine how the protein structure will change when you rotate it by 90° about each of the three axes. This will help you to better visualize the proteins in three dimensions.</p>
+<p>A: The code is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetch <span class="number">4</span>pad</span><br><span class="line"><span class="keyword">as</span> cartoon</span><br><span class="line">util.rainbow</span><br><span class="line">png <span class="number">2.6</span><span class="number">.41</span>.png</span><br><span class="line">png <span class="number">2.6</span><span class="number">.42</span>.png</span><br><span class="line">png <span class="number">2.6</span><span class="number">.43</span>.png</span><br></pre></td></tr></table></figure>
+<p><img src="/images/2.6.41.png" alt="(exercise 2.6.41)"><br><img src="/images/2.6.42.png" alt="(exercise 2.6.42)"><br><img src="/images/2.6.43.png" alt="(exercise 2.6.43)"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/08/a-new-start/" rel="prev" title="a new start.">
+      <i class="fa fa-chevron-left"></i> a new start.
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/12/distance-matrices-with-numpy/" rel="next" title="使用Numpy计算距离矩阵[翻译]">
+      使用Numpy计算距离矩阵[翻译] <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Generating</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Generating</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

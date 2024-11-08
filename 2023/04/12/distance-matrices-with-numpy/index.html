@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这是一篇通过NumPy计算距离矩阵的文章，原作者是Jay Mody。文章介绍了距离矩阵的概念，并且通过层层递进的方式，特别清晰地讲解了使用NumPy进行向量计算的思路和技巧。 原文链接：Computing Distance Matrices with NumPy 超级推荐：） (已获原文作者授权)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Numpy计算距离矩阵[翻译]">
+<meta property="og:url" content="http://yoursite.com/2023/04/12/distance-matrices-with-numpy/index.html">
+<meta property="og:site_name" content="Yin&#39;s Blog">
+<meta property="og:description" content="这是一篇通过NumPy计算距离矩阵的文章，原作者是Jay Mody。文章介绍了距离矩阵的概念，并且通过层层递进的方式，特别清晰地讲解了使用NumPy进行向量计算的思路和技巧。 原文链接：Computing Distance Matrices with NumPy 超级推荐：） (已获原文作者授权)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-12T13:56:25.000Z">
+<meta property="article:modified_time" content="2023-04-13T02:19:01.000Z">
+<meta property="article:author" content="Generating">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2023/04/12/distance-matrices-with-numpy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用Numpy计算距离矩阵[翻译] | Yin's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Yin's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-blog">
+
+    <a href="/home" rel="section"><i class="fa fa-home fa-fw"></i>Blog</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/04/12/distance-matrices-with-numpy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Generating">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yin's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用Numpy计算距离矩阵[翻译]
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-12 21:56:25" itemprop="dateCreated datePublished" datetime="2023-04-12T21:56:25+08:00">2023-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-13 10:19:01" itemprop="dateModified" datetime="2023-04-13T10:19:01+08:00">2023-04-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css">
+<p>这是一篇通过<code>NumPy</code>计算距离矩阵的文章，原作者是<a href="https://jaykmody.com/" target="_blank" rel="noopener">Jay Mody</a>。文章介绍了距离矩阵的概念，并且通过层层递进的方式，特别清晰地讲解了使用<code>NumPy</code>进行向量计算的思路和技巧。</p>
+<p>原文链接：<a href="https://jaykmody.com/blog/distance-matrices-with-numpy/" target="_blank" rel="noopener">Computing Distance Matrices with NumPy</a></p>
+<p>超级推荐：）</p>
+<p>(已获原文作者授权)</p>
+
+
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>一般来说，<a href="https://en.wikipedia.org/wiki/Distance_matrix#:~:text=In%20mathematics%2C%20computer%20science%20and,may%20not%20be%20a%20metric." target="_blank" rel="noopener">距离矩阵</a>是一个方阵，它刻画了一组向量之间的成对距离。更形式化的定义如下：</p>
+<blockquote>
+<p>给定一组向量$v_1, v_2, … v_n$和它的距离矩阵<code>dist</code>，矩阵元素$dist_{ij}$表示$v_i$和$v_j$之间的距离。注意：考虑到$dist_{ij} = dist_{ji}$，这意味着这个矩阵是对称的，并且矩阵的维度是$(n, n)$。</p>
+</blockquote>
+<p>但是以上距离矩阵定义还是没有给出<strong>距离</strong>的定义。事实上，<a href="https://numerics.mathdotnet.com/Distance.html" target="_blank" rel="noopener">我们有很多的方式去定义和计算两个向量间的距离</a>，但是通常而言，当我们提到向量间的距离时，我们指的是它们的<strong>欧几里得距离</strong>(欧氏距离)。 欧氏距离其实就是我们直觉上认为的距离（即：图上两点间的最短线段）。数学上，我们可以定义两向量$u$, $v$间的欧氏距离为：</p>
+<p>$$||u - v||_2 = \sqrt{\sum_{k=1}^d (u_k - v_k)^2}$$</p>
+<p>其中$d$是向量的维度。</p>
+<p>距离矩阵在各类场景下被广泛应用，包括数学、计算机科学、图论、生物信息等领域。本文就来讨论一下距离矩阵在机器学习领域的应用。</p>
+<h2 id="引入的例子：k最近邻算法"><a href="#引入的例子：k最近邻算法" class="headerlink" title="引入的例子：k最近邻算法"></a>引入的例子：k最近邻算法</h2><p><a href="https://cs231n.github.io/classification/#k---nearest-neighbor-classifier" target="_blank" rel="noopener">k最近邻算法</a>（kNN）是一类机器学习分类算法（也可以做回归），其底层计算充分利用了距离矩阵。它的想法很简单，我们可以通过查看其$k$个最近邻的标记数据点的类别来预测任何给定数据点的类别。</p>
+<p>那我们如何确定哪个标注数据点是最近邻的呢？如果我们将每个数据点表示成向量的话，我们就可以计算他们的欧氏距离了。（有了距离，当然也就能判断近与远啦）</p>
+<p>假如在这里，我们不仅仅想对单一数据点进行预测，而是对多个数据点进行预测。更形式化的说法是，给定$n$个标注数据点（训练数据），$m$个未标注数据点（测试数据，也即我们想要去分类的数据点）。这些数据点可以被表示为$d$维向量。为了实现kNN分类器，你需要计算所有标注-未标注数据对之间的距离。这些距离将被存储在一个维度为$(m，n)$的矩阵<code>dist</code>中，其中$dist_{ij}$表示第$i$个未标注数据点和第$j$个标注数据点之间的距离。如果我们将标注数据点表示为$(n, d)$维的矩阵$Y$，而未标注的的数据点表示为$(m, d)$维的矩阵$X$，那么距离矩阵就可以表示为：</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d (X_{ik} - Y_{jk})^2}$$</p>
+<p>这个距离计算便是算法的核心，也是本文的专注所在。那么下面我们就来实现它。</p>
+<p><strong>注意:</strong> 尽管矩阵不再是方阵，我在这里还是使用<strong>距离矩阵</strong>这个术语。（因为我们在这里是计算两组向量间的距离，而不是一组。）</p>
+<h2 id="使用三组循环"><a href="#使用三组循环" class="headerlink" title="使用三组循环"></a>使用三组循环</h2><p>实现距离矩阵计算的最简单方法是对所有的对和元素遍历循环：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">X <span class="comment"># 测试数据 (m, d)</span></span><br><span class="line">X_train <span class="comment"># 训练数据 (n, d)</span></span><br><span class="line"></span><br><span class="line">m = X.shape[<span class="number">0</span>]</span><br><span class="line">n = X_train.shape[<span class="number">0</span>]</span><br><span class="line">d = X.shape[<span class="number">1</span>]</span><br><span class="line">dists = np.zeros((num_test, num_train)) <span class="comment"># 距离矩阵 (m, n)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">        val = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(d):</span><br><span class="line">            val += (X[i][k] - X_train[j][k]) ** <span class="number">2</span></span><br><span class="line">        dist[i][j] = np.sqrt(val)</span><br></pre></td></tr></table></figure>
+
+<p>虽然上述代码是可行的，但是它却非常的低效，完全没有利用<code>numpy</code>的高效向量运算。那么让我们来改进一下：</p>
+<h2 id="使用两组循环"><a href="#使用两组循环" class="headerlink" title="使用两组循环"></a>使用两组循环</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="comment"># 逐元素相减，逐元素平方操作，求和并计算平方根）</span></span><br><span class="line">        dist[i][j] = np.sqrt(np.sum((X[i] - X_train[j]) ** <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p>这样是不是好点啦？而且代码也变得简洁易读了很多。但是我们还可以进一步改进。</p>
+<h2 id="使用单组循环"><a href="#使用单组循环" class="headerlink" title="使用单组循环"></a>使用单组循环</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    dist[i, :] = np.sqrt(np.sum((X[i] - X_train) ** <span class="number">2</span>, axis=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>哇，这里发生了什么？好吧，让我们来拆解分析一下。</p>
+<p>首先，<code>X[i] - X_train</code>这句不应该会报错的吗？<code>X[i]</code>的维度是$(d)$，然而<code>X_train</code>的形状却是$(n,d)$啊。逐元素操作只有在两部分拥有相同维度的情况下才可以啊，这是啥情况？</p>
+<p>答案是：<code>Numpy</code>自动对<code>X[i]</code>进行了<a href="https://numpy.org/doc/stable/user/basics.broadcasting.html" target="_blank" rel="noopener">广播操作</a>，从而使其匹配了<code>X_train</code>的维度。你可以认为是<code>X[i]</code>堆叠了$n$次，进而产生了一个维度为$(n,d)$的矩阵。其中该矩阵的每一行都是<code>X[i]</code>的一个拷贝。这样的话，当进行减法操作的时候，<code>X_train</code>的每一行就可以和<code>X[i]</code>进行相减了（这里的减与被减没所谓的，反正我们后续要对结果取平方）。如果你想的话，在numpy中，你甚至可以通过<code>np.tile</code>自行创建”堆叠”的矩阵。不过这样操作会<a href="https://gist.github.com/jaymody/9d7dec07300f817ddd40b74b1d648a34" target="_blank" rel="noopener">比让numpy自动通过广播方式进行处理慢</a>。现在我们就获得了一个$(n,d)$维度的矩阵，其中每行是<code>X[i] - X_train[j]</code>。</p>
+<p>那么下一步就容易很多啦，我们进行逐元素的平方操作。然后我们需要对每一行求和，因此我们使用带着参数<code>axis=1</code>的<code>np.sum</code>操作。该操作让numpy通过第一轴向进行求和（即通过行）。注意，如果不带上轴向参数的话，<code>np.sum</code>将会对矩阵中的每个元素进行求和，并输出一个标量值。而通过带着参数<code>axis=1</code>的<code>np.sum</code>操作，我们将获得一个大小为$n$的向量。</p>
+<p>最后，我们对该向量进行逐元素的平方根操作，并将其存储到<code>dist[i]</code>中。</p>
+<p>好了，下面是一个更容易理解的注释版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">    <span class="comment"># X[i] 被广播化 (d) -&gt; (n, d)</span></span><br><span class="line">    <span class="comment"># (每行都是X[i]的一份拷贝)</span></span><br><span class="line">    diffs = X[i] - X_train</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 逐元素平方操作</span></span><br><span class="line">    squared = diffs ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对每行进行求和 (n, d) -&gt; (n)</span></span><br><span class="line">    sums = np.sum(squared, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 逐元素的平方根操作，并存储到dist中</span></span><br><span class="line">    dist[i, :] = np.sqrt(sums)</span><br></pre></td></tr></table></figure>
+
+<h2 id="无循环版本？！"><a href="#无循环版本？！" class="headerlink" title="无循环版本？！"></a>无循环版本？！</h2><p>其实我们还可以做的更好，只使用向量/矩阵操作，连循环都不用。这是啥情况？我们再仔细看看我们的方程：</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d (x_{ik} - y_{jk})^2}$$</p>
+<p>想想看，如果我们把求和号里的表达式展开呢？</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2x_{ik}y_{jk} + y^2_{jk}}$$</p>
+<p>有趣吧？让我们把这个求和分配开：</p>
+<p>$$dist_{ij} = \sqrt{\sum_{k=1}^d x^2_{ik} - 2 \sum_{k=1}^d x_{ik}y_{jk} + \sum_{k=1}^dy^2_{jk}}$$</p>
+<p>你会发现，上式的每一个求和其实都是点乘。现在我们就替换掉原来的符号，使用更干净的表达：</p>
+<p>$$dist_{ij} = \sqrt{x_i \cdot x_i - 2x_i \cdot y_j + y_j \cdot y_j}$$</p>
+<p>我们注意到，对于所有$i,j$的组合，中间项是唯一的，而左右两项都是重复的。考虑固定$i$或者$j$并对其它变量进行迭代，你会发现$x_i \cdot x_i$出现$j$次而$y_j \cdot y_j$出现$i$次。因此，这里的挑战是搞清楚如何计算所有可能的$x_i \cdot x_i$，$x_i \cdot y_j$和$y_j \cdot y_j$，然后将它们正确地加和。所有这些都不涉及循环。我们来试一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># this has the same affect as taking the dot product of each row with itself</span></span><br><span class="line">x2 = np.sum(X**<span class="number">2</span>, axis=<span class="number">1</span>) <span class="comment"># shape of (m)</span></span><br><span class="line">y2 = np.sum(X_train**<span class="number">2</span>, axis=<span class="number">1</span>) <span class="comment"># shape of (n)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># we can compute all x_i * y_j and store it in a matrix at xy[i][j] by</span></span><br><span class="line"><span class="comment"># taking the matrix multiplication between X and X_train transpose</span></span><br><span class="line"><span class="comment"># if you're stuggling to understand this, draw out the matrices and</span></span><br><span class="line"><span class="comment"># do the matrix multiplication by hand</span></span><br><span class="line"><span class="comment"># (m, d) x (d, n) -&gt; (m, n)</span></span><br><span class="line">xy = np.matmul(X, X_train.T)</span><br><span class="line"></span><br><span class="line"><span class="comment"># each row in xy needs to be added with x2[i]</span></span><br><span class="line"><span class="comment"># each column of xy needs to be added with y2[j]</span></span><br><span class="line"><span class="comment"># to get everything to play well, we'll need to reshape</span></span><br><span class="line"><span class="comment"># x2 from (m) -&gt; (m, 1), numpy will handle the rest of the broadcasting for us</span></span><br><span class="line"><span class="comment"># see: https://numpy.org/doc/stable/user/basics.broadcasting.html</span></span><br><span class="line">x2 = x2.reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">dists = np.sqrt(x2 - <span class="number">2</span>*xy + y2) <span class="comment"># (m, 1) repeat columnwise + (m, n) + (n) repeat rowwise -&gt; (m, n)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1组循环！！？！"><a href="#1组循环！！？！" class="headerlink" title="-1组循环！！？！"></a>-1组循环！！？！</h2><p>哈哈哈哈哈</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br></pre></td></tr></table></figure>
+
+<h2 id="速度对比"><a href="#速度对比" class="headerlink" title="速度对比"></a>速度对比</h2><p>为了比较每种实现的速度，我们可以使用<a href="https://github.com/jaymody/cs231n/blob/master/assignment1/knn.ipynb" target="_blank" rel="noopener">cs231n课程作业1-knn</a>中的cifar-10数据集的子集进行测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Two loop version took <span class="number">39.707250</span> seconds</span><br><span class="line">One loop version took <span class="number">28.705156</span> seconds</span><br><span class="line">No loop version took <span class="number">0.218127</span> seconds</span><br></pre></td></tr></table></figure>
+
+<p>很明显，无循环版本是最后的胜利者，其以数量级的优势击败两组循环和一组循环版本。注意噢，我们在这里并没有使用三组循环的版本，因为这会跑好几个小时啊！在<code>10</code>个训练和<code>10</code>个测试例子的情况下，三组循环版本都花了<code>0.5</code>秒。作为参考，上述测试是基于<code>5000</code>个训练数据和<code>500</code>个测试数据的结果。好耶！给向量操作点赞  ：）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/16/EPSPP-Exercises-2/" rel="prev" title="EPSPP-Exercises-2">
+      <i class="fa fa-chevron-left"></i> EPSPP-Exercises-2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/13/gpt-from-scratch/" rel="next" title="60行NumPy手搓GPT[翻译]">
+      60行NumPy手搓GPT[翻译] <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Generating</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Generating</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
